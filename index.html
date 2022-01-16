@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Media Player</title>
+        <link rel="stylesheet" href="./main.css">
+    </head>
+
+    <body>
+        <header>
+            <h1>The Awesome Media Player</h1>
+        </header>
+        <main>
+            <section id="player-area">
+                    <div id="audio-animation">
+                        <img src="#" alt="Audio Animation">
+                    </div>
+                    <div id="progress-bar"></div>
+                    <div id="total-length">00.00</div>
+                    <div id="current-time">00.00</div>
+                    <div id="controls">
+                        <button id="btnPrevious" class="buttons">
+                            <img src="./images/icons/skip_previous.svg" alt="">
+                        </button>
+                        <button id="btnReplay" class="buttons">
+                            <img src="./images/icons/replay_10.svg" alt="">
+                        </button>
+                        <button id="btnPlay" class="buttons">
+                            <img src="./images/icons/play_arrow.svg" alt="">
+                        </button>
+                        <button id="btnPause" class="buttons">
+                            <img src="./images/icons/pause.svg" alt="">
+                        </button>
+                        <button id="btnStop" class="buttons">
+                            <img src="./images/icons/stop.svg" alt="">
+                        </button>
+                        <button id="btnForward" class="buttons">
+                            <img src="./images/icons/forward.svg" alt="">
+                        </button>
+                        <button id="btnNext" class="buttons">
+                            <img src="./images/icons/skip_next.svg" alt="">
+                        </button>
+                </div>
+            </section>
+            <section id="playlist-area">
+                <img src="./media/somkeddream.jpg" alt="Song Thumbnail">
+                <h2>Artist Name</h2>
+                <h3>Track Name</h3>
+            </section>
+            <audio id="tracks">
+            </audio>
+        </main>
+
+        <footer>
+        </footer>
+        <script src="./main.js">
+        </script>
+    </body>
+</html>
