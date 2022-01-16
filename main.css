@@ -8,6 +8,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 85vw;
+    display: grid;
+    justify-items: center;
 }
 
 h1, h2, h3 {
@@ -42,6 +44,8 @@ h1 {
 }
 
 #playlist-area {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
     border: black 0.0125rem solid;
     width: 19rem;
     height: 19rem;
@@ -50,5 +54,16 @@ h1 {
 
 #playlist-area img {
     width: 100%;
-    height: 65%;
+}
+
+@media only screen and (min-width: 50em) {
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 5rem;
+    }
+
+    #player-area {
+        align-self: center;
+    }
 }
