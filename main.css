@@ -83,11 +83,11 @@ h1, h2, h3, p {
     width: 100%;
     position: relative;
     margin-top: 1rem;
-    margin-bottom: 0.3rem;
 }
 
 #progress-bar {
     border: white 0.125rem solid;
+    margin-bottom: 0.5rem;
 }
 
 #current-time {
@@ -109,6 +109,10 @@ h1, h2, h3, p {
 
 #controls img {
     width: 2.5rem;
+}
+
+#playlist-area {
+    margin-bottom: 3rem;
 }
 
 #playlist-header {
