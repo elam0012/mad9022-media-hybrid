@@ -11,7 +11,14 @@ body {
     height: 100vh;
     display: grid;
     justify-items: center;
-    background-color: rgb(255, 196, 0);
+    background-color: black;
+    background-image: linear-gradient(
+        0deg,
+        hsl(0deg 0% 0%) 0%,
+        hsl(39deg 100% 25%) 50%,
+        hsl(44deg 98% 48%) 100%
+        );
+    background-repeat: no-repeat;
 }
 
 h1 {
@@ -33,31 +40,66 @@ h1, h2, h3, p {
     margin: 0;
 }
 
+#player {
+    position: relative;
+    width: 100%;
+    /* height: 19rem; */
+}
+
+#track-info-p {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    color: white;
+    padding-bottom: 1rem;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#thumbnail {
+    width: 100%;
+}
+
+.track-info-pl {
+    justify-self: left;
+    margin-left: 1rem;
+}
+
 #artist-name {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-top: 1rem;
 }
 
+.artist-list {
+    text-align: left;
+    color: white;
+}
+
 #track-name {
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: bold;
 }
 
-#progress-bar {
-    width: 19rem;
-    height: 0.2rem;
-    border: black 0.125rem solid;
+#progress {
+    width: 100%;
+    position: relative;
     margin-top: 1rem;
     margin-bottom: 0.3rem;
 }
 
+#progress-bar {
+    border: white 0.125rem solid;
+}
+
 #current-time {
     display: inline;
+    color: white;
 }
 
 #total-length {
     display: inline;
-    margin-left: 14.5rem;
+    position: absolute;
+    right: 0;
+    color: white;
 }
 
 #controls {
@@ -69,14 +111,44 @@ h1, h2, h3, p {
     width: 2.5rem;
 }
 
-#thumbnail {
-    border: black 0.0125rem solid;
-    width: 19rem;
-    height: 19rem;
+#playlist-header {
+    text-align: left;
+    margin-bottom: 2rem;
+    color: white;
 }
 
-#playlist-area img {
+.list-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 3fr;
+    margin: 1rem;
+    border-bottom: white solid 0.1rem;
+    position: relative;
+}
+
+.duration {
+    position: absolute;
+    right: 0;
+    top: 10%;
+    color: white;
+}
+
+hr {
+    margin: 2rem 0;
+}
+
+.list-item img {
     width: 100%;
+}
+
+.track-list {
+    font-weight: bold;
+    margin-top: 0.5rem;
+    text-align: left;
+    color: white;
+}
+.active {
+border-bottom: solid rgb(241, 175, 20) 0.1rem;
 }
 
 @media only screen and (min-width: 50em) {
