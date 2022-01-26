@@ -43,6 +43,11 @@ h1, h2, h3, p {
     width: 100%;
 }
 
+button {
+    background-color: transparent;
+    border: none;
+}
+
 #track-info-p {
     position: absolute;
     width: 100%;
