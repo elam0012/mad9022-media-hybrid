@@ -1,23 +1,23 @@
 "use strict"
 
-// import {} from ".j"
+import TRACKS from "./tracks.js"
 
 const APP = {
     init: (ev) => {
         let currentTrack = 0;
         let player = document.getElementById('player');
-        let btnPlay = document.getElementById('btnSkipPre');
-        let btnPlay = document.getElementById('btnReplay');
+        let btnSkipPre = document.getElementById('btnSkipPre');
+        let btnReplay = document.getElementById('btnReplay');
         let btnPlay = document.getElementById('btnPlay');
-        let btnPlay = document.getElementById('btnPause');
-        let btnPlay = document.getElementById('btnStop');
-        let btnPlay = document.getElementById('btnForward');
-        let btnPlay = document.getElementById('btnSkipNext');
+        let btnPause = document.getElementById('btnPause');
+        let btnStop = document.getElementById('btnStop');
+        let btnForward = document.getElementById('btnForward');
+        let btnSkipNext = document.getElementById('btnSkipNext');
         let songList = [
         //array of objects representing the songs to be played
         ];
-        btnStop.addEventListener('click', stopTrack);
-        btnPlay.addEventListener('click', playTrack);
+        btnStop.addEventListener('click', APP.stopTrack);
+        btnPlay.addEventListener('click', APP.playTrack);
         player.addEventListener('ended', APP.playNextTrack);
         player.addEventListener('play', APP.startAnimations);
         player.addEventListener('durationchange', APP.updateTotalTime);

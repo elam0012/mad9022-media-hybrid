@@ -1,0 +1,40 @@
+const TRACKS =  [
+    {
+        artist: "Yasir Elamin",
+        title: "Smoked Dream",
+        src: "media/somkeddream.mp3",
+        img: "media/somkeddream.jpg",
+    },
+    {
+        artist: "Yasir Elamin",
+        title: "Game of Thrones Theme",
+        src: "media/gameofthrones.mp3",
+        img: "media/gameofthrones.jpg",
+    },
+    {
+        artist: "Yasir Elamin",
+        title: "Keys To Imagination",
+        src: "media/keystoimmagination",
+        img: "media/keystoimmagination",
+    },
+    {
+        artist: "Yasir Elamin",
+        title: "The Beginning",
+        src: "media/thebeginning",
+        img: "media/thebeginning",
+    },
+    {
+        artist: "Yasir Elamin",
+        title: "Bingo",
+        src: "media/bing.mp3",
+        img: "media/bingo.jpg",
+    },
+    {
+        artist: "Yasir Elamin",
+        title: "The Alphabet Song",
+        src: "media/alphabet",
+        img: "media/alphabet",
+    },
+];
+
+export default TRACKS
