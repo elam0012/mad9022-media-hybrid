@@ -13,39 +13,67 @@ const APP = {
         let btnStop = document.getElementById('btnStop');
         let btnForward = document.getElementById('btnForward');
         let btnSkipNext = document.getElementById('btnSkipNext');
-        let songList = [
+        // let songList = [
         //array of objects representing the songs to be played
-        ];
-        btnStop.addEventListener('click', APP.stopTrack);
-        btnPlay.addEventListener('click', APP.playTrack);
-        player.addEventListener('ended', APP.playNextTrack);
-        player.addEventListener('play', APP.startAnimations);
-        player.addEventListener('durationchange', APP.updateTotalTime);
-        player.addEventListener('timeupdate', APP.updateCurrentTime);
+        // ];
+        APP.songList()
+        // btnStop.addEventListener('click', APP.stopTrack);
+        // btnPlay.addEventListener('click', APP.playTrack);
+        // player.addEventListener('ended', APP.playNextTrack);
+        // player.addEventListener('play', APP.startAnimations);
+        // player.addEventListener('durationchange', APP.updateTotalTime);
+        // player.addEventListener('timeupdate', APP.updateCurrentTime);
     },
+    songList: () => {
+        TRACKS.forEach(track => {
+            let div = document.createElement("div")
+            div.classList.add("list-item")
+            let playlistArea = document.getElementById("playlist-area")
+            playlistArea.append(div)
+            let img = document.createElement("img")
+            img.src = track.img
+            img.alt = "Track Thumbnail"
+            div.append(img)
+            let div2 = document.createElement("div")
+            div2.classList.add("track-info-pl")
+            div.append(div2)
+            let artist = document.createElement("p")
+            artist.classList.add("artist-list")
+            artist.innerText = track.artist
+            div2.append(artist)
+            let song = document.createElement("p")
+            song.classList.add("track-list")
+            song.innerText = track.title
+            div2.append(song)
+            // let duration = document.createElement("p")
+            // duration.classList.add("duration")
+            // duration.innerText = ??
+            // div.append(duration)
+        })
+},
     playTrack: (ev) => {
         if (!player.paused) return; //already playing
         player.src = songList[currentTrack].src;
         player.play();
         startAnimations();
     },
-    stopTrack: (ev) => {
-        player.pause();
-        player.currentTime = 0;
-        stopAnimations();
-    },
-    playNextTrack: (ev) => {
+    // stopTrack: (ev) => {
+    //     player.pause();
+    //     player.currentTime = 0;
+    //     stopAnimations();
+    // },
+    // playNextTrack: (ev) => {
 
-    },
-    startAnimations: (ev) => {
+    // },
+    // startAnimations: (ev) => {
 
-    },
-    updateTotalTime: (ev) => {
+    // },
+    // updateTotalTime: (ev) => {
 
-    },
-    updateCurrentTime: (ev) => {
+    // },
+    // updateCurrentTime: (ev) => {
 
-    },
+    // },
 };
 
 document.addEventListener("DOMContentLoaded", APP.init);
