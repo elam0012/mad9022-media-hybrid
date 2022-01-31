@@ -2,10 +2,13 @@
 
 import TRACKS from "./tracks.js"
 
+let currentTrack = 0;
+// let player = document.getElementById('player-area');
+let player
+
 const APP = {
     init: () => {
-        let currentTrack = 0;
-        let player = document.getElementById('player');
+        
         let btnSkipPre = document.getElementById('btnSkipPre');
         let btnReplay = document.getElementById('btnReplay');
         let btnPlay = document.getElementById('btnPlay');
@@ -14,8 +17,15 @@ const APP = {
         let btnForward = document.getElementById('btnForward');
         let btnSkipNext = document.getElementById('btnSkipNext');
         APP.songList()
-        // btnStop.addEventListener('click', APP.stopTrack);
-        // btnPlay.addEventListener('click', APP.playTrack);
+        btnPlay.addEventListener ("click", () => {
+            APP.playTrack()
+        });
+        btnPause.addEventListener ('click', () => {
+            APP.pauseTrack()
+        });
+        btnStop.addEventListener ('click', () => {
+            APP.stopTrack()
+        });
         // player.addEventListener('ended', APP.playNextTrack);
         // player.addEventListener('play', APP.startAnimations);
         // player.addEventListener('durationchange', APP.updateTotalTime);
@@ -43,6 +53,9 @@ const APP = {
             song.innerText = track.title
             div2.append(song)
             let audio = document.createElement("audio")
+            audio.classList.add("audioTrack")
+            let main = document.getElementById("main")
+            main.append(audio)
             audio.src = track.src
             audio.addEventListener("durationchange", (ev) => {
                 let duration = ev.target.duration
@@ -58,17 +71,22 @@ const APP = {
             })
         })
     },
-    // playTrack: (ev) => {
-    //     if (!player.paused) return; //already playing
-    //     player.src = songList[currentTrack].src;
-    //     player.play();
-    //     startAnimations();
-    // },
-    // stopTrack: (ev) => {
-    //     player.pause();
-    //     player.currentTime = 0;
-    //     stopAnimations();
-    // },
+    playTrack: (ev) => {
+        let audioTracks = document.getElementsByClassName("audioTrack")
+        player = audioTracks[currentTrack]
+        if (!player.paused) return; //already playing
+        player.play()
+        // startAnimations();
+    },
+    pauseTrack: (ev) => {
+        player.pause();
+        // stopAnimations();
+    },
+    stopTrack: (ev) => {
+        player.pause();
+        player.currentTime = 0;
+        // stopAnimations();
+    },
     // playNextTrack: (ev) => {
 
     // },
