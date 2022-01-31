@@ -8,11 +8,12 @@ let thumbnail = document.getElementById("thumbnail")
 let audioTracks = document.getElementsByClassName("audioTrack")
 let artistName = document.getElementById("artist-name")
 let trackName = document.getElementById("track-name")
+let listItems =document.getElementsByClassName("list-item")
+let durations =document.getElementsByClassName("duration")
 let trackDuration = document.getElementById("track-duration")
 
 const APP = {
     init: () => {
-        
         let btnSkipPre = document.getElementById('btnSkipPre');
         let btnReplay = document.getElementById('btnReplay');
         let btnPlay = document.getElementById('btnPlay');
@@ -24,8 +25,6 @@ const APP = {
         thumbnail.src = audioTracks[currentTrack].dataset.img
         artistName.innerText = audioTracks[currentTrack].dataset.artist
         trackName.innerText = audioTracks[currentTrack].dataset.title
-        console.log(audioTracks[currentTrack].dataset)
-        // trackDuration.innerText = audioTracks[currentTrack].dataset.formatedDuration
         btnPlay.addEventListener ("click", () => {
             APP.playTrack()
         });
@@ -73,7 +72,6 @@ const APP = {
         audio.dataset.artist = track.artist
         audio.dataset.title = track.title
         audio.dataset.img = track.img
-        audio.dataset.formatedDuration = ""
         audio.addEventListener("durationchange", (ev) => {
             let duration = ev.target.duration
             let durationMinutes =  Math.trunc(duration/60)
@@ -84,8 +82,6 @@ const APP = {
             let HTMLduration = document.createElement("p")
             HTMLduration.classList.add("duration")
             HTMLduration.innerText = formatedDuration
-            audio.dataset.formatedDuration = formatedDuration
-            // console.log(typeof audio.dataset.formatedDuration)
             div.append(HTMLduration)
         })
     },
@@ -96,15 +92,24 @@ const APP = {
         artistName.innerText = audioTracks[currentTrack].dataset.artist
         trackName.innerText = audioTracks[currentTrack].dataset.title
         player.play()
+        btnPlay.classList.add("display-none")
+        btnPause.classList.remove("display-none")
+        listItems[currentTrack].classList.add("active")
+        trackDuration.innerText = durations[currentTrack].innerText
         // startAnimations();
     },
     pauseTrack: (ev) => {
+        if (player.paused) return;
         player.pause();
+        btnPause.classList.add("display-none")
+        btnPlay.classList.remove("display-none")
         // stopAnimations();
     },
     stopTrack: (ev) => {
         player.pause();
         player.currentTime = 0;
+        btnPause.classList.add("display-none")
+        btnPlay.classList.remove("display-none")
         // stopAnimations();
     },
     // playNextTrack: (ev) => {

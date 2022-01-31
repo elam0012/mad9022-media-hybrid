@@ -44,8 +44,11 @@ h1, h2, h3, p {
 }
 
 button {
-    background-color: transparent;
-    /* border: none; */
+    background-color: black;
+    border-radius: 3rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    box-shadow: black;
 }
 
 #track-info-p {
@@ -121,6 +124,10 @@ button {
     text-align: left;
     margin-bottom: 2rem;
     color: white;
+}
+
+.display-none {
+    display: none;
 }
 
 .list-item {
