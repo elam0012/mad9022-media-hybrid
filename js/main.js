@@ -3,8 +3,12 @@
 import TRACKS from "./tracks.js"
 
 let currentTrack = 0;
-// let player = document.getElementById('player-area');
 let player
+let thumbnail = document.getElementById("thumbnail")
+let audioTracks = document.getElementsByClassName("audioTrack")
+let artistName = document.getElementById("artist-name")
+let trackName = document.getElementById("track-name")
+let trackDuration = document.getElementById("track-duration")
 
 const APP = {
     init: () => {
@@ -17,6 +21,11 @@ const APP = {
         let btnForward = document.getElementById('btnForward');
         let btnSkipNext = document.getElementById('btnSkipNext');
         APP.songList()
+        thumbnail.src = audioTracks[currentTrack].dataset.img
+        artistName.innerText = audioTracks[currentTrack].dataset.artist
+        trackName.innerText = audioTracks[currentTrack].dataset.title
+        console.log(audioTracks[currentTrack].dataset)
+        // trackDuration.innerText = audioTracks[currentTrack].dataset.formatedDuration
         btnPlay.addEventListener ("click", () => {
             APP.playTrack()
         });
@@ -52,29 +61,40 @@ const APP = {
             song.classList.add("track-list")
             song.innerText = track.title
             div2.append(song)
-            let audio = document.createElement("audio")
-            audio.classList.add("audioTrack")
-            let main = document.getElementById("main")
-            main.append(audio)
-            audio.src = track.src
-            audio.addEventListener("durationchange", (ev) => {
-                let duration = ev.target.duration
-                let durationMinutes =  Math.trunc(duration/60)
-                if (durationMinutes < 10) {durationMinutes = "0" + durationMinutes}
-                let durationSecondes = Math.trunc(duration % 60)
-                if (durationSecondes < 10) {durationSecondes = "0" + durationSecondes}
-                let formatedDuration = (durationMinutes + ":" + durationSecondes)
-                let HTMLduration = document.createElement("p")
-                HTMLduration.classList.add("duration")
-                HTMLduration.innerText = formatedDuration
-                div.append(HTMLduration)
-            })
+            APP.createAudio(track, div)
+        })
+    },
+    createAudio: (track, div) => {
+        let audio = document.createElement("audio")
+        audio.classList.add("audioTrack")
+        let main = document.getElementById("main")
+        main.append(audio)
+        audio.src = track.src
+        audio.dataset.artist = track.artist
+        audio.dataset.title = track.title
+        audio.dataset.img = track.img
+        audio.dataset.formatedDuration = ""
+        audio.addEventListener("durationchange", (ev) => {
+            let duration = ev.target.duration
+            let durationMinutes =  Math.trunc(duration/60)
+            if (durationMinutes < 10) {durationMinutes = "0" + durationMinutes}
+            let durationSecondes = Math.trunc(duration % 60)
+            if (durationSecondes < 10) {durationSecondes = "0" + durationSecondes}
+            let formatedDuration = (durationMinutes + ":" + durationSecondes)
+            let HTMLduration = document.createElement("p")
+            HTMLduration.classList.add("duration")
+            HTMLduration.innerText = formatedDuration
+            audio.dataset.formatedDuration = formatedDuration
+            // console.log(typeof audio.dataset.formatedDuration)
+            div.append(HTMLduration)
         })
     },
     playTrack: (ev) => {
-        let audioTracks = document.getElementsByClassName("audioTrack")
         player = audioTracks[currentTrack]
         if (!player.paused) return; //already playing
+        thumbnail.src = audioTracks[currentTrack].dataset.img
+        artistName.innerText = audioTracks[currentTrack].dataset.artist
+        trackName.innerText = audioTracks[currentTrack].dataset.title
         player.play()
         // startAnimations();
     },

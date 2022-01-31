@@ -45,7 +45,7 @@ h1, h2, h3, p {
 
 button {
     background-color: transparent;
-    border: none;
+    /* border: none; */
 }
 
 #track-info-p {
@@ -97,7 +97,7 @@ button {
     color: white;
 }
 
-#total-length {
+#track-duration {
     display: inline;
     position: absolute;
     right: 0;
