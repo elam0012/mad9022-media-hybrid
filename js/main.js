@@ -3,7 +3,7 @@
 import TRACKS from "./tracks.js"
 
 const APP = {
-    init: (ev) => {
+    init: () => {
         let currentTrack = 0;
         let player = document.getElementById('player');
         let btnSkipPre = document.getElementById('btnSkipPre');
@@ -13,9 +13,6 @@ const APP = {
         let btnStop = document.getElementById('btnStop');
         let btnForward = document.getElementById('btnForward');
         let btnSkipNext = document.getElementById('btnSkipNext');
-        // let songList = [
-        //array of objects representing the songs to be played
-        // ];
         APP.songList()
         // btnStop.addEventListener('click', APP.stopTrack);
         // btnPlay.addEventListener('click', APP.playTrack);
@@ -45,18 +42,28 @@ const APP = {
             song.classList.add("track-list")
             song.innerText = track.title
             div2.append(song)
-            // let duration = document.createElement("p")
-            // duration.classList.add("duration")
-            // duration.innerText = ??
-            // div.append(duration)
+            let audio = document.createElement("audio")
+            audio.src = track.src
+            audio.addEventListener("durationchange", (ev) => {
+                let duration = ev.target.duration
+                let durationMinutes =  Math.trunc(duration/60)
+                if (durationMinutes < 10) {durationMinutes = "0" + durationMinutes}
+                let durationSecondes = Math.trunc(duration % 60)
+                if (durationSecondes < 10) {durationSecondes = "0" + durationSecondes}
+                let formatedDuration = (durationMinutes + ":" + durationSecondes)
+                let HTMLduration = document.createElement("p")
+                HTMLduration.classList.add("duration")
+                HTMLduration.innerText = formatedDuration
+                div.append(HTMLduration)
+            })
         })
-},
-    playTrack: (ev) => {
-        if (!player.paused) return; //already playing
-        player.src = songList[currentTrack].src;
-        player.play();
-        startAnimations();
     },
+    // playTrack: (ev) => {
+    //     if (!player.paused) return; //already playing
+    //     player.src = songList[currentTrack].src;
+    //     player.play();
+    //     startAnimations();
+    // },
     // stopTrack: (ev) => {
     //     player.pause();
     //     player.currentTime = 0;
