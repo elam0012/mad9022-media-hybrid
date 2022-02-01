@@ -2,18 +2,24 @@
 
 import TRACKS from "./tracks.js"
 
-let currentTrack = 0;
-let player
-let thumbnail = document.getElementById("thumbnail")
-let audioTracks = document.getElementsByClassName("audioTrack")
-let artistName = document.getElementById("artist-name")
-let trackName = document.getElementById("track-name")
-let listItems =document.getElementsByClassName("list-item")
-let durations =document.getElementsByClassName("duration")
-let trackDuration = document.getElementById("track-duration")
-
 const APP = {
+    currentTrack: 0,
+    artistName: null,
+    player: null,
+    thumbnail: null,
+    audioTracks: null,
+    trackName: null,
+    listItems: null,
+    durations: null,
+    trackDuration: null,
     init: () => {
+        APP.artistName = document.getElementById("artist-name") 
+        APP.thumbnail = document.getElementById("thumbnail")
+        APP.audioTracks = document.getElementsByClassName("audioTrack")
+        APP.trackName = document.getElementById("track-name")
+        APP.listItems =document.getElementsByClassName("list-item")
+        APP.durations =document.getElementsByClassName("duration")
+        APP.trackDuration = document.getElementById("track-duration")
         let btnSkipPre = document.getElementById('btnSkipPre');
         let btnReplay = document.getElementById('btnReplay');
         let btnPlay = document.getElementById('btnPlay');
@@ -22,9 +28,9 @@ const APP = {
         let btnForward = document.getElementById('btnForward');
         let btnSkipNext = document.getElementById('btnSkipNext');
         APP.songList()
-        thumbnail.src = audioTracks[currentTrack].dataset.img
-        artistName.innerText = audioTracks[currentTrack].dataset.artist
-        trackName.innerText = audioTracks[currentTrack].dataset.title
+        APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
+        APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
+        APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
         btnPlay.addEventListener ("click", () => {
             APP.playTrack()
         });
@@ -34,10 +40,10 @@ const APP = {
         btnStop.addEventListener ('click', () => {
             APP.stopTrack()
         });
-        // player.addEventListener('ended', APP.playNextTrack);
-        // player.addEventListener('play', APP.startAnimations);
-        // player.addEventListener('durationchange', APP.updateTotalTime);
-        // player.addEventListener('timeupdate', APP.updateCurrentTime);
+        // APP.player.addEventListener('ended', APP.playNextTrack);
+        // APP.player.addEventListener('play', APP.startAnimations);
+        // APP.player.addEventListener('durationchange', APP.updateTotalTime);
+        // APP.player.addEventListener('timeupdate', APP.updateCurrentTime);
     },
     songList: () => {
         TRACKS.forEach(track => {
@@ -86,28 +92,28 @@ const APP = {
         })
     },
     playTrack: (ev) => {
-        player = audioTracks[currentTrack]
-        if (!player.paused) return; //already playing
-        thumbnail.src = audioTracks[currentTrack].dataset.img
-        artistName.innerText = audioTracks[currentTrack].dataset.artist
-        trackName.innerText = audioTracks[currentTrack].dataset.title
-        player.play()
+        APP.player = APP.audioTracks[APP.currentTrack]
+        if (!APP.player.paused) return; //already playing
+        APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
+        APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
+        APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
+        APP.player.play()
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
-        listItems[currentTrack].classList.add("active")
-        trackDuration.innerText = durations[currentTrack].innerText
+        APP.listItems[APP.currentTrack].classList.add("active")
+        APP.trackDuration.innerText = APP.durations[APP.currentTrack].innerText
         // startAnimations();
     },
     pauseTrack: (ev) => {
-        if (player.paused) return;
-        player.pause();
+        if (APP.player.paused) return;
+        APP.player.pause();
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
         // stopAnimations();
     },
     stopTrack: (ev) => {
-        player.pause();
-        player.currentTime = 0;
+        APP.player.pause();
+        APP.player.currentTime = 0;
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
         // stopAnimations();
