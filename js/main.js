@@ -4,24 +4,12 @@ import TRACKS from "./tracks.js"
 
 const APP = {
     currentTrack: 0,
-    artistName: null,
     player: null,
-    thumbnail: null,
     audioTracks: null,
-    trackName: null,
-    listItems: null,
-    durations: null,
-    trackDuration: null,
-    init: () => {
-        APP.artistName = document.getElementById("artist-name") 
-        APP.thumbnail = document.getElementById("thumbnail")
-        APP.audioTracks = document.getElementsByClassName("audioTrack")
-        APP.trackName = document.getElementById("track-name")
-        APP.listItems =document.getElementsByClassName("list-item")
-        APP.durations =document.getElementsByClassName("duration")
-        APP.trackDuration = document.getElementById("track-duration")
+    init: () => { 
+        APP.audioTracks = document.getElementsByClassName("audio-track")
         APP.buildSongList()
-        APP.setupPlayerBackground()
+        APP.PlayerBackground()
         APP.addListeners()
     },
     buildSongList: () => {
@@ -50,7 +38,7 @@ const APP = {
     },
     createAudio: (track, div) => {
         let audio = document.createElement("audio")
-        audio.classList.add("audioTrack")
+        audio.classList.add("audio-track")
         let main = document.getElementById("main")
         main.append(audio)
         audio.src = track.src
@@ -72,76 +60,42 @@ const APP = {
             HTMLduration.classList.add("duration")
             HTMLduration.innerText = formatedDuration
             div.append(HTMLduration)
-            console.log(formatedDuration)
         })
-        
     },
-    setupPlayerBackground: () => {
-        APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
-        APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
-        APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
-        // console.log(APP.audioTracks[APP.currentTrack].dataset.duration)
+    PlayerBackground: () => {
+        let thumbnail = document.getElementById("thumbnail")
+        thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
+        let artistName = document.getElementById("artist-name")
+        artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
+        let trackName = document.getElementById("track-name")
+        trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
     },
     addListeners: () => {
         btnPlay.addEventListener ("click", APP.playTrack)
         btnPause.addEventListener ('click', APP.pauseTrack)
         btnStop.addEventListener ('click', APP.stopTrack)
-        // APP.player.addEventListener('ended', APP.playNextTrack);
-        // APP.player.addEventListener('play', APP.startAnimations);
-        // APP.player.addEventListener('durationchange', APP.updateTotalTime);
-        // APP.player.addEventListener('timeupdate', APP.updateCurrentTime);
     },
-    playTrack: (ev) => {
+    playTrack: () => {
         APP.player = APP.audioTracks[APP.currentTrack]
-        if (!APP.player.paused) return; //already playing
+        if (!APP.player.paused) return
         APP.player.play()
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
-        APP.listItems[APP.currentTrack].classList.add("active")
-        APP.trackDuration.innerText = APP.durations[APP.currentTrack].innerText
-        // startAnimations();
+        let listItems =document.getElementsByClassName("list-item")
+        listItems[APP.currentTrack].classList.add("active")
     },
-    pauseTrack: (ev) => {
+    pauseTrack: () => {
         if (APP.player.paused) return;
         APP.player.pause();
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
-        // stopAnimations();
     },
-    stopTrack: (ev) => {
+    stopTrack: () => {
         APP.player.pause();
         APP.player.currentTime = 0;
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
-        // stopAnimations();
     },
-    // playNextTrack: (ev) => {
-
-    // },
-    // startAnimations: (ev) => {
-
-    // },
-    // updateTotalTime: (ev) => {
-
-    // },
-    // updateCurrentTime: (ev) => {
-
-    // },
 };
 
 document.addEventListener("DOMContentLoaded", APP.init);
-
-// APP.mapButtons()
- // mapButtons: () => {
-        // let btnSkipPre = document.getElementById('btnSkipPre');
-        // let btnReplay = document.getElementById('btnReplay');
-        // let btnPlay = document.getElementById('btnPlay');
-        // let btnPause = document.getElementById('btnPause');
-        // let btnStop = document.getElementById('btnStop');
-        // let btnForward = document.getElementById('btnForward');
-        // let btnSkipNext = document.getElementById('btnSkipNext');
-    // },
-
-    // APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
-        // APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
-        // APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
