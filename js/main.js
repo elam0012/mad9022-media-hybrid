@@ -20,32 +20,11 @@ const APP = {
         APP.listItems =document.getElementsByClassName("list-item")
         APP.durations =document.getElementsByClassName("duration")
         APP.trackDuration = document.getElementById("track-duration")
-        let btnSkipPre = document.getElementById('btnSkipPre');
-        let btnReplay = document.getElementById('btnReplay');
-        let btnPlay = document.getElementById('btnPlay');
-        let btnPause = document.getElementById('btnPause');
-        let btnStop = document.getElementById('btnStop');
-        let btnForward = document.getElementById('btnForward');
-        let btnSkipNext = document.getElementById('btnSkipNext');
-        APP.songList()
-        APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
-        APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
-        APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
-        btnPlay.addEventListener ("click", () => {
-            APP.playTrack()
-        });
-        btnPause.addEventListener ('click', () => {
-            APP.pauseTrack()
-        });
-        btnStop.addEventListener ('click', () => {
-            APP.stopTrack()
-        });
-        // APP.player.addEventListener('ended', APP.playNextTrack);
-        // APP.player.addEventListener('play', APP.startAnimations);
-        // APP.player.addEventListener('durationchange', APP.updateTotalTime);
-        // APP.player.addEventListener('timeupdate', APP.updateCurrentTime);
+        APP.buildSongList()
+        APP.setupPlayerBackground()
+        APP.addListeners()
     },
-    songList: () => {
+    buildSongList: () => {
         TRACKS.forEach(track => {
             let div = document.createElement("div")
             div.classList.add("list-item")
@@ -78,6 +57,10 @@ const APP = {
         audio.dataset.artist = track.artist
         audio.dataset.title = track.title
         audio.dataset.img = track.img
+        APP.setDuration(audio, div)
+        
+    },
+    setDuration: (audio, div) => {
         audio.addEventListener("durationchange", (ev) => {
             let duration = ev.target.duration
             let durationMinutes =  Math.trunc(duration/60)
@@ -89,14 +72,28 @@ const APP = {
             HTMLduration.classList.add("duration")
             HTMLduration.innerText = formatedDuration
             div.append(HTMLduration)
+            console.log(formatedDuration)
         })
+        
+    },
+    setupPlayerBackground: () => {
+        APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
+        APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
+        APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
+        // console.log(APP.audioTracks[APP.currentTrack].dataset.duration)
+    },
+    addListeners: () => {
+        btnPlay.addEventListener ("click", APP.playTrack)
+        btnPause.addEventListener ('click', APP.pauseTrack)
+        btnStop.addEventListener ('click', APP.stopTrack)
+        // APP.player.addEventListener('ended', APP.playNextTrack);
+        // APP.player.addEventListener('play', APP.startAnimations);
+        // APP.player.addEventListener('durationchange', APP.updateTotalTime);
+        // APP.player.addEventListener('timeupdate', APP.updateCurrentTime);
     },
     playTrack: (ev) => {
         APP.player = APP.audioTracks[APP.currentTrack]
         if (!APP.player.paused) return; //already playing
-        APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
-        APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
-        APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
         APP.player.play()
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
@@ -133,3 +130,18 @@ const APP = {
 };
 
 document.addEventListener("DOMContentLoaded", APP.init);
+
+// APP.mapButtons()
+ // mapButtons: () => {
+        // let btnSkipPre = document.getElementById('btnSkipPre');
+        // let btnReplay = document.getElementById('btnReplay');
+        // let btnPlay = document.getElementById('btnPlay');
+        // let btnPause = document.getElementById('btnPause');
+        // let btnStop = document.getElementById('btnStop');
+        // let btnForward = document.getElementById('btnForward');
+        // let btnSkipNext = document.getElementById('btnSkipNext');
+    // },
+
+    // APP.thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
+        // APP.artistName.innerText = APP.audioTracks[APP.currentTrack].dataset.artist
+        // APP.trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
