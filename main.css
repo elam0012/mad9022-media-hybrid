@@ -1,6 +1,8 @@
 html {
     box-sizing: border-box;
+    font-family: 'Comfortaa', cursive;
 }
+
 
   *, *::before, *::after {
     box-sizing: inherit;

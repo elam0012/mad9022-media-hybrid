@@ -6,11 +6,14 @@ const APP = {
     currentTrack: 0,
     player: null,
     audioTracks: null,
+    listItems: null,
     init: () => { 
         APP.audioTracks = document.getElementsByClassName("audio-track")
+        APP.listItems =document.getElementsByClassName("list-item")
         APP.buildSongList()
-        APP.PlayerBackground()
+        APP.playerBackground()
         APP.addListeners()
+        APP.selectTrack()
     },
     buildSongList: () => {
         TRACKS.forEach(track => {
@@ -60,9 +63,10 @@ const APP = {
             HTMLduration.classList.add("duration")
             HTMLduration.innerText = formatedDuration
             div.append(HTMLduration)
+            audio.dataset.duration = formatedDuration
         })
     },
-    PlayerBackground: () => {
+    playerBackground: () => {
         let thumbnail = document.getElementById("thumbnail")
         thumbnail.src = APP.audioTracks[APP.currentTrack].dataset.img
         let artistName = document.getElementById("artist-name")
@@ -75,14 +79,29 @@ const APP = {
         btnPause.addEventListener ('click', APP.pauseTrack)
         btnStop.addEventListener ('click', APP.stopTrack)
     },
+    selectTrack: () => {
+        let arr = [].slice.call(APP.listItems)
+        // let arr = Array.form(APP.listItems)
+        arr.forEach((item, index) => {
+            item.addEventListener("click" , () => {
+                APP.player = APP.audioTracks[APP.currentTrack]
+                APP.stopTrack()
+                APP.currentTrack = index
+                APP.player = APP.audioTracks[APP.currentTrack]
+                APP.playerBackground()
+                APP.playTrack()
+            })
+        })
+    },
     playTrack: () => {
         APP.player = APP.audioTracks[APP.currentTrack]
         if (!APP.player.paused) return
         APP.player.play()
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
-        let listItems =document.getElementsByClassName("list-item")
-        listItems[APP.currentTrack].classList.add("active")
+        APP.listItems[APP.currentTrack].classList.add("active")
+        let trackDuration = document.getElementById("track-duration")
+        trackDuration.innerText =  APP.player.dataset.duration
     },
     pauseTrack: () => {
         if (APP.player.paused) return;
@@ -95,6 +114,7 @@ const APP = {
         APP.player.currentTime = 0;
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
+        APP.listItems[APP.currentTrack].classList.remove("active")
     },
 };
 
