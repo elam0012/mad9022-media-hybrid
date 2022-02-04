@@ -49,7 +49,6 @@ const APP = {
         audio.dataset.title = track.title
         audio.dataset.img = track.img
         APP.setDuration(audio, div)
-        
     },
     setDuration: (audio, div) => {
         audio.addEventListener("durationchange", (ev) => {
