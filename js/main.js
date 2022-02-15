@@ -120,25 +120,29 @@ const APP = {
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
     },
-    stopTrack: () => {
+    stopTrack: (ev) => {
         APP.player.pause();
         APP.player.currentTime = 0;
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
-        APP.listItems[APP.currentTrack].classList.remove("active")
+        if (!ev) APP.listItems[APP.currentTrack].classList.remove("active") //to keep the current track highlighted if Stop button clicked
     },
-    nextTrack: () => {
+    nextTrack: (ev) => {
+        let x = APP.player.paused
         APP.stopTrack()
         APP.currentTrack++
         if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
-        APP.playTrack()
+        if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on next
+        if(!x) APP.playTrack()
         APP.playerBackground()
     },
     previousTrack: (ev) => {
+        let x = APP.player.paused
         APP.stopTrack()
         if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
         APP.currentTrack--
-        APP.playTrack()
+        if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on next
+        if(!x) APP.playTrack()
         APP.playerBackground()
     },
     forward10: (ev) => {
