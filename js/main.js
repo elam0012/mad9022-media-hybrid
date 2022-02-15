@@ -83,9 +83,9 @@ const APP = {
         let btnStop = document.getElementById('btnStop');
         btnStop.addEventListener ('click', APP.stopTrack)
         let btnNext = document.getElementById('btnSkipNext');
-        btnNext.addEventListener ("click", APP.nextTrack)
+        btnNext.addEventListener ("click", APP.changeTrack)
         let btnPrevious = document.getElementById('btnSkipPre');
-        btnPrevious.addEventListener ("click", APP.previousTrack)
+        btnPrevious.addEventListener ("click", APP.changeTrack)
         let btnForward10 = document.getElementById('btnForward');
         btnForward10.addEventListener ("click", APP.forward10)
         let btnReplay10 = document.getElementById('btnReplay');
@@ -105,14 +105,12 @@ const APP = {
         })
     },
     playTrack: () => {
-        APP.player = APP.audioTracks[APP.currentTrack]
+        APP.updateTotalDuration()
         if (!APP.player.paused) return
         APP.player.play()
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
         APP.listItems[APP.currentTrack].classList.add("active")
-        let trackDuration = document.getElementById("track-duration")
-        trackDuration.innerText =  APP.player.dataset.duration
     },
     pauseTrack: () => {
         if (APP.player.paused) return;
@@ -127,30 +125,34 @@ const APP = {
         btnPlay.classList.remove("display-none")
         if (!ev) APP.listItems[APP.currentTrack].classList.remove("active") //to keep the current track highlighted if Stop button clicked
     },
-    nextTrack: (ev) => {
-        let x = APP.player.paused
+    changeTrack: (ev) => {
+        let pauseStatus = APP.player.paused
         APP.stopTrack()
+        ev.path[1].id === "btnSkipNext" ? APP.nextTrack() : APP.previousTrack()
+        if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on button
+        if(!pauseStatus) APP.playTrack()
+        APP.playerBackground()
+        APP.updateTotalDuration()
+    },
+    nextTrack: () => {
         APP.currentTrack++
         if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
-        if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on next
-        if(!x) APP.playTrack()
-        APP.playerBackground()
     },
-    previousTrack: (ev) => {
-        let x = APP.player.paused
-        APP.stopTrack()
+    previousTrack: () => {
         if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
         APP.currentTrack--
-        if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on next
-        if(!x) APP.playTrack()
-        APP.playerBackground()
     },
     forward10: (ev) => {
         console.log(ev.target)
     },
     replay10: (ev) => {
         console.log(ev.target)
-    }
+    },
+    updateTotalDuration: () => {
+        APP.player = APP.audioTracks[APP.currentTrack]
+        let trackDuration = document.getElementById("track-duration")
+        trackDuration.innerText =  APP.player.dataset.duration
+    },
 };
 
 document.addEventListener("DOMContentLoaded", APP.init);
