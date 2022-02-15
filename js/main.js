@@ -7,16 +7,17 @@ const APP = {
     player: null,
     audioTracks: null,
     listItems: null,
+    trackLength: null,
     init: () => { 
         APP.audioTracks = document.getElementsByClassName("audio-track")
         APP.listItems =document.getElementsByClassName("list-item")
         APP.buildSongList()
         APP.playerBackground()
-        APP.mapButtons()
         APP.addListeners()
         APP.selectTrack()
     },
     buildSongList: () => {
+        APP.trackLength = TRACKS.length
         TRACKS.forEach(track => {
             let div = document.createElement("div")
             div.classList.add("list-item")
@@ -74,22 +75,20 @@ const APP = {
         let trackName = document.getElementById("track-name")
         trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
     },
-    mapButtons: () => {
-        let btnPlay = document.getElementById('btnPlay');
-        let btnSkipPre = document.getElementById('btnSkipPre');
-        let btnReplay = document.getElementById('btnReplay');
-        let btnPause = document.getElementById('btnPause');
-        let btnStop = document.getElementById('btnStop');
-        let btnForward = document.getElementById('btnForward');
-        let btnSkipNext = document.getElementById('btnSkipNext');
-    },
     addListeners: () => {
+        let btnPlay = document.getElementById('btnPlay');
         btnPlay.addEventListener ("click", APP.playTrack)
+        let btnPause = document.getElementById('btnPause');
         btnPause.addEventListener ('click', APP.pauseTrack)
+        let btnStop = document.getElementById('btnStop');
         btnStop.addEventListener ('click', APP.stopTrack)
+        let btnNext = document.getElementById('btnSkipNext');
         btnNext.addEventListener ("click", APP.nextTrack)
+        let btnPrevious = document.getElementById('btnSkipPre');
         btnPrevious.addEventListener ("click", APP.previousTrack)
-        btnForward10t.addEventListener ("click", APP.forward10)
+        let btnForward10 = document.getElementById('btnForward');
+        btnForward10.addEventListener ("click", APP.forward10)
+        let btnReplay10 = document.getElementById('btnReplay');
         btnReplay10.addEventListener ("click", APP.replay10)
     },
     selectTrack: () => {
@@ -129,42 +128,24 @@ const APP = {
         APP.listItems[APP.currentTrack].classList.remove("active")
     },
     nextTrack: () => {
+        APP.stopTrack()
+        APP.currentTrack++
+        if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
+        APP.playTrack()
+        APP.playerBackground()
+    },
+    previousTrack: (ev) => {
+        APP.stopTrack()
+        if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
+        APP.currentTrack--
+        APP.playTrack()
+        APP.playerBackground()
+    },
+    forward10: (ev) => {
         console.log(ev.target)
-        //stop audio playing - this could be a function call
-        //change CSS class indicating that a track is playing - this could be called from stop audio function
-        //hide pause button and show play button - this could be called from stop audio function
-        APP.currentTrack = APP.changeNextTrack();
     },
-    changeNextTrack: () => {
-        let len = TRACKS.length; //get length of array
-        APP.currentTrack++; //increment the currentTrack number
-        if (APP.currentTrack >= len) {
-            //if the current track number is greater than or equal to the length
-            APP.currentTrack = 0;
-        } 
-    },
-    previousTrack: () => {
-        //user clicked on the next button
+    replay10: (ev) => {
         console.log(ev.target)
-        //stop audio playing - this could be a function call
-        //change CSS class indicating that a track is playing - this could be called from stop audio function
-        //hide pause button and show play button - this could be called from stop audio function
-        APP.currentTrack = APP.changePreviousTrack();
-    },
-    changePreviousTrack: () => {
-        let len = TRACKS.length; //get length of array
-        APP.currentTrack--; //increment the currentTrack number
-        if (APP.currentTrack === 0) {
-            APP.currentTrack = len+1;
-        }
-    },
-    forward10: () => {
-        console.log(ev.target)
-        
-    },
-    replay10: () => {
-        console.log(ev.target)
-        
     }
 };
 
