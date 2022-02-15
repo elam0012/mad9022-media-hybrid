@@ -12,6 +12,7 @@ const APP = {
         APP.listItems =document.getElementsByClassName("list-item")
         APP.buildSongList()
         APP.playerBackground()
+        APP.mapButtons()
         APP.addListeners()
         APP.selectTrack()
     },
@@ -73,10 +74,23 @@ const APP = {
         let trackName = document.getElementById("track-name")
         trackName.innerText = APP.audioTracks[APP.currentTrack].dataset.title
     },
+    mapButtons: () => {
+        let btnPlay = document.getElementById('btnPlay');
+        let btnSkipPre = document.getElementById('btnSkipPre');
+        let btnReplay = document.getElementById('btnReplay');
+        let btnPause = document.getElementById('btnPause');
+        let btnStop = document.getElementById('btnStop');
+        let btnForward = document.getElementById('btnForward');
+        let btnSkipNext = document.getElementById('btnSkipNext');
+    },
     addListeners: () => {
         btnPlay.addEventListener ("click", APP.playTrack)
         btnPause.addEventListener ('click', APP.pauseTrack)
         btnStop.addEventListener ('click', APP.stopTrack)
+        btnNext.addEventListener ("click", APP.nextTrack)
+        btnPrevious.addEventListener ("click", APP.previousTrack)
+        btnForward10t.addEventListener ("click", APP.forward10)
+        btnReplay10.addEventListener ("click", APP.replay10)
     },
     selectTrack: () => {
         let arr = [].slice.call(APP.listItems)
@@ -114,6 +128,44 @@ const APP = {
         btnPlay.classList.remove("display-none")
         APP.listItems[APP.currentTrack].classList.remove("active")
     },
+    nextTrack: () => {
+        console.log(ev.target)
+        //stop audio playing - this could be a function call
+        //change CSS class indicating that a track is playing - this could be called from stop audio function
+        //hide pause button and show play button - this could be called from stop audio function
+        APP.currentTrack = APP.changeNextTrack();
+    },
+    changeNextTrack: () => {
+        let len = TRACKS.length; //get length of array
+        APP.currentTrack++; //increment the currentTrack number
+        if (APP.currentTrack >= len) {
+            //if the current track number is greater than or equal to the length
+            APP.currentTrack = 0;
+        } 
+    },
+    previousTrack: () => {
+        //user clicked on the next button
+        console.log(ev.target)
+        //stop audio playing - this could be a function call
+        //change CSS class indicating that a track is playing - this could be called from stop audio function
+        //hide pause button and show play button - this could be called from stop audio function
+        APP.currentTrack = APP.changePreviousTrack();
+    },
+    changePreviousTrack: () => {
+        let len = TRACKS.length; //get length of array
+        APP.currentTrack--; //increment the currentTrack number
+        if (APP.currentTrack === 0) {
+            APP.currentTrack = len+1;
+        }
+    },
+    forward10: () => {
+        console.log(ev.target)
+        
+    },
+    replay10: () => {
+        console.log(ev.target)
+        
+    }
 };
 
 document.addEventListener("DOMContentLoaded", APP.init);
