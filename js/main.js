@@ -18,11 +18,9 @@ const APP = {
     },
     buildSongList: () => {
         APP.trackLength = TRACKS.length
-        TRACKS.forEach(track => {
+        let listDiv = TRACKS.map(track => {
             let div = document.createElement("div")
             div.classList.add("list-item")
-            let playlistArea = document.getElementById("playlist-area")
-            playlistArea.append(div)
             let img = document.createElement("img")
             img.src = track.img
             img.alt = "Track Thumbnail"
@@ -39,7 +37,17 @@ const APP = {
             song.innerText = track.title
             div2.append(song)
             APP.createAudio(track, div)
+            return div
         })
+        let playlistArea = document.getElementById("playlist-area")
+        playlistArea.append(...listDiv)
+        // let four = document.querySelector('.four');
+        // let html4 = info.map((item) => {
+        //     let p = document.createElement('p');
+        //     p.append(item.txt);
+        //     return p;
+        // });
+        // four.append(...html4);
     },
     createAudio: (track, div) => {
         let audio = document.createElement("audio")
