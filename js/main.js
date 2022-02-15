@@ -56,9 +56,9 @@ const APP = {
         audio.addEventListener("durationchange", (ev) => {
             let duration = ev.target.duration
             let durationMinutes =  Math.trunc(duration/60)
-            if (durationMinutes < 10) {durationMinutes = "0" + durationMinutes}
+            if (durationMinutes < 10) durationMinutes = "0" + durationMinutes
             let durationSecondes = Math.trunc(duration % 60)
-            if (durationSecondes < 10) {durationSecondes = "0" + durationSecondes}
+            if (durationSecondes < 10) durationSecondes = "0" + durationSecondes
             let formatedDuration = (durationMinutes + ":" + durationSecondes)
             let HTMLduration = document.createElement("p")
             HTMLduration.classList.add("duration")
@@ -113,7 +113,7 @@ const APP = {
         APP.listItems[APP.currentTrack].classList.add("active")
     },
     pauseTrack: () => {
-        if (APP.player.paused) return;
+        if (APP.player.paused) return
         APP.player.pause();
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
@@ -130,17 +130,17 @@ const APP = {
         APP.stopTrack()
         ev.path[1].id === "btnSkipNext" ? APP.nextTrack() : APP.previousTrack()
         if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on button
-        if(!pauseStatus) APP.playTrack()
+        if (!pauseStatus) APP.playTrack()
         APP.playerBackground()
         APP.updateTotalDuration()
     },
     nextTrack: () => {
-        APP.currentTrack++
+        APP.currentTrack ++
         if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
     },
     previousTrack: () => {
         if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
-        APP.currentTrack--
+        APP.currentTrack --
     },
     forward10: (ev) => {
         console.log(ev.target)
