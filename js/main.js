@@ -80,7 +80,6 @@ const APP = {
     },
     selectTrack: () => {
         let arr = [].slice.call(APP.listItems)
-        // let arr = Array.form(APP.listItems)
         arr.forEach((item, index) => {
             item.addEventListener("click" , () => {
                 APP.player = APP.audioTracks[APP.currentTrack]
