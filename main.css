@@ -166,6 +166,7 @@ hr {
 }
 .active {
 border-bottom: solid rgb(241, 175, 20) 0.1rem;
+transform: scale(1.15);
 }
 
 @media only screen and (min-width: 50em) {
