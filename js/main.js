@@ -143,10 +143,10 @@ const APP = {
         APP.currentTrack --
     },
     forward10: (ev) => {
-        console.log(ev.target)
+        APP.player.currentTime = APP.player.currentTime + 10
     },
     replay10: (ev) => {
-        console.log(ev.target)
+        APP.player.currentTime = APP.player.currentTime - 10
     },
     updateTotalDuration: () => {
         APP.player = APP.audioTracks[APP.currentTrack]
