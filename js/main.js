@@ -41,13 +41,6 @@ const APP = {
         })
         let playlistArea = document.getElementById("playlist-area")
         playlistArea.append(...listDiv)
-        // let four = document.querySelector('.four');
-        // let html4 = info.map((item) => {
-        //     let p = document.createElement('p');
-        //     p.append(item.txt);
-        //     return p;
-        // });
-        // four.append(...html4);
     },
     createAudio: (track, div) => {
         let audio = document.createElement("audio")
