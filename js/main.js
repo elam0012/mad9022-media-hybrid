@@ -8,6 +8,7 @@ const APP = {
     audioTracks: null,
     listItems: null,
     trackLength: null,
+    trackDuration: null,
     init: () => { 
         APP.audioTracks = document.getElementsByClassName("audio-track")
         APP.listItems =document.getElementsByClassName("list-item")
@@ -143,17 +144,36 @@ const APP = {
         if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
         APP.currentTrack --
     },
-    forward10: (ev) => {
-        APP.player.currentTime = APP.player.currentTime + 10
+    forward10: () => {
+        let convertedTime = APP.timeStringToFloat(APP.trackDuration.innerText)
+        if ((convertedTime - (APP.player.currentTime+10)) > 0) {
+            APP.player.currentTime = APP.player.currentTime + 10
+        } else {
+            APP.stopTrack()
+            APP.nextTrack()
+            APP.playTrack()
+        }
     },
-    replay10: (ev) => {
-        APP.player.currentTime = APP.player.currentTime - 10
+    replay10: () => {
+        if (APP.player.currentTime-10 < 0) {
+            APP.stopTrack()
+            APP.previousTrack()
+            APP.playTrack()
+        } else {
+            APP.player.currentTime = APP.player.currentTime - 10
+        }
     },
     updateTotalDuration: () => {
         APP.player = APP.audioTracks[APP.currentTrack]
-        let trackDuration = document.getElementById("track-duration")
-        trackDuration.innerText =  APP.player.dataset.duration
+        APP.trackDuration = document.getElementById("track-duration")
+        APP.trackDuration.innerText =  APP.player.dataset.duration
     },
+    timeStringToFloat: (time) => {
+        let minutesSeconds = time.split(/[.:]/);
+        let minutes = parseInt(minutesSeconds[0], 10);
+        let seconds = minutesSeconds[1] ? parseInt(minutesSeconds[1], 10) : 0;
+        return minutes*60 + seconds;
+    }
 };
 
 document.addEventListener("DOMContentLoaded", APP.init);
