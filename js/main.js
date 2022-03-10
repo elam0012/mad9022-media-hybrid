@@ -96,6 +96,7 @@ const APP = {
     },
     selectTrack: () => {
         let arr = [].slice.call(APP.listItems)
+        APP.player = arr[APP.currentTrack]
         arr.forEach((item, index) => {
             item.addEventListener("click" , () => {
                 APP.player = APP.audioTracks[APP.currentTrack]
@@ -123,6 +124,7 @@ const APP = {
         btnPlay.classList.remove("display-none")
     },
     stopTrack: (ev) => {
+        if (APP.player.paused || APP.player.paused === undefined) return
         APP.player.pause();
         APP.player.currentTime = 0;
         btnPause.classList.add("display-none")
@@ -132,25 +134,17 @@ const APP = {
     changeTrack: (ev) => {
         let pauseStatus = APP.player.paused
         APP.stopTrack()
-        ev.path[1].id === "btnSkipNext" ? APP.nextTrack() : APP.previousTrack()
+        ev.path[1].id === "btnSkipNext" ? APP.playNextTrack() : APP.playPreviousTrack()
         if (ev) APP.listItems[APP.currentTrack].classList.add("active") // to highlight the track when click on button
         if (!pauseStatus) APP.playTrack()
         APP.playerBackground()
         APP.updateTotalDuration()
-    },
-    nextTrack: () => {
-        APP.currentTrack ++
-        if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
     },
     playNextTrack: () => {
         APP.stopTrack()
         APP.currentTrack ++
         if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
         APP.playTrack()
-    },
-    previousTrack: () => {
-        if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
-        APP.currentTrack --
     },
     playPreviousTrack: () => {
         APP.stopTrack()
