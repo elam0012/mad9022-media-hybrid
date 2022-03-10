@@ -92,6 +92,7 @@ const APP = {
         btnForward10.addEventListener ("click", APP.forward10)
         let btnReplay10 = document.getElementById('btnReplay');
         btnReplay10.addEventListener ("click", APP.replay10)
+        if (APP.player) APP.player.addEventListener('ended', APP.playNextTrack);
     },
     selectTrack: () => {
         let arr = [].slice.call(APP.listItems)
@@ -113,6 +114,7 @@ const APP = {
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
         APP.listItems[APP.currentTrack].classList.add("active")
+        APP.addListeners()
     },
     pauseTrack: () => {
         if (APP.player.paused) return
@@ -140,25 +142,33 @@ const APP = {
         APP.currentTrack ++
         if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
     },
+    playNextTrack: () => {
+        APP.stopTrack()
+        APP.currentTrack ++
+        if (APP.currentTrack === TRACKS.length) APP.currentTrack = 0
+        APP.playTrack()
+    },
     previousTrack: () => {
         if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
         APP.currentTrack --
+    },
+    playPreviousTrack: () => {
+        APP.stopTrack()
+        if (APP.currentTrack === 0) APP.currentTrack = TRACKS.length
+        APP.currentTrack --
+        APP.playTrack()
     },
     forward10: () => {
         let convertedTime = APP.timeStringToFloat(APP.trackDuration.innerText)
         if ((convertedTime - (APP.player.currentTime+10)) > 0) {
             APP.player.currentTime = APP.player.currentTime + 10
         } else {
-            APP.stopTrack()
-            APP.nextTrack()
-            APP.playTrack()
+            APP.playNextTrack()
         }
     },
     replay10: () => {
         if (APP.player.currentTime-10 < 0) {
-            APP.stopTrack()
-            APP.previousTrack()
-            APP.playTrack()
+            APP.playPreviousTrack()
         } else {
             APP.player.currentTime = APP.player.currentTime - 10
         }
