@@ -9,7 +9,6 @@ const APP = {
     listItems: null,
     trackLength: null,
     trackDuration: null,
-    ProgressBar: null,
     init: () => { 
         APP.audioTracks = document.getElementsByClassName("audio-track")
         APP.listItems =document.getElementsByClassName("list-item")
@@ -17,12 +16,6 @@ const APP = {
         APP.playerBackground()
         APP.addListeners()
         APP.selectTrack()
-        APP.ProgressBar = document.getElementById("progress-bar")
-        setInterval(() => {
-            const computedStyle = getComputedStyle(APP.ProgressBar)
-            const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0
-            APP.ProgressBar.style.setProperty("--width", width + 0.01)
-        }, 5)
     },
     buildSongList: () => {
         APP.trackLength = TRACKS.length
@@ -122,6 +115,7 @@ const APP = {
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
         APP.listItems[APP.currentTrack].classList.add("active")
+        APP.ProgressBar()
         APP.addListeners()
     },
     pauseTrack: () => {
@@ -184,6 +178,19 @@ const APP = {
         let minutes = parseInt(minutesSeconds[0], 10);
         let seconds = minutesSeconds[1] ? parseInt(minutesSeconds[1], 10) : 0;
         return minutes*60 + seconds;
+    },
+    ProgressBar: () => {
+        const ProgressBar = document.getElementById("progress-bar")
+        let HTMLcurrentTime = document.getElementById("current-time")
+        let convertedTime = APP.timeStringToFloat(APP.trackDuration.innerText)
+        let increment = 100/convertedTime
+        setInterval(() => {
+            console.log(APP.player.currentTime)
+            HTMLcurrentTime.innerText = APP.player.currentTime
+            const computedStyle = getComputedStyle(ProgressBar)
+            const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0
+            ProgressBar.style.setProperty("--width", width + increment )
+        }, 1000)
     }
 };
 
