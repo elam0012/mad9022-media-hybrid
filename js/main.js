@@ -96,7 +96,12 @@ const APP = {
         btnForward10.addEventListener ("click", APP.forward10)
         let btnReplay10 = document.getElementById('btnReplay');
         btnReplay10.addEventListener ("click", APP.replay10)
-        if (APP.player) APP.player.addEventListener('ended', APP.playNextTrack);
+        if (APP.player) { 
+            APP.player.addEventListener('ended', () => {
+                APP.listItems[APP.currentTrack].classList.remove("active")
+                APP.playNextTrack();
+            })
+        }
     },
     selectTrack: () => {
         let arr = [].slice.call(APP.listItems)
@@ -137,6 +142,7 @@ const APP = {
         if (!ev) APP.listItems[APP.currentTrack].classList.remove("active") //to keep the current track highlighted if Stop button clicked
     },
     changeTrack: (ev) => {
+        APP.listItems[APP.currentTrack].classList.remove("active")
         let pauseStatus = APP.player.paused
         APP.stopTrack()
         ev.path[1].id === "btnSkipNext" ? APP.playNextTrack() : APP.playPreviousTrack()
@@ -184,14 +190,13 @@ const APP = {
         return minutes*60 + seconds;
     },
     ProgressBar: () => {
-        const ProgressBar = document.getElementById("progress-bar")
-        let HTMLcurrentTime = document.getElementById("current-time")
         let convertedTime = APP.timeStringToFloat(APP.trackDuration.innerText)
         let increment = 100/convertedTime
         setInterval(() => {
-            console.log(APP.player.currentTime)
             let formatedDuration = APP.formatTime(APP.player.currentTime)
+            let HTMLcurrentTime = document.getElementById("current-time")
             HTMLcurrentTime.innerText = formatedDuration
+            const ProgressBar = document.getElementById("progress-bar")
             const computedStyle = getComputedStyle(ProgressBar)
             const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0
             ProgressBar.style.setProperty("--width", width + increment )
