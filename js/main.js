@@ -9,6 +9,7 @@ const APP = {
     listItems: null,
     trackLength: null,
     trackDuration: null,
+    ProgressBar: null,
     init: () => { 
         APP.audioTracks = document.getElementsByClassName("audio-track")
         APP.listItems =document.getElementsByClassName("list-item")
@@ -16,6 +17,12 @@ const APP = {
         APP.playerBackground()
         APP.addListeners()
         APP.selectTrack()
+        APP.ProgressBar = document.getElementById("progress-bar")
+        setInterval(() => {
+            const computedStyle = getComputedStyle(APP.ProgressBar)
+            const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0
+            APP.ProgressBar.style.setProperty("--width", width + 0.01)
+        }, 5)
     },
     buildSongList: () => {
         APP.trackLength = TRACKS.length
