@@ -57,17 +57,21 @@ const APP = {
     setDuration: (audio, div) => {
         audio.addEventListener("durationchange", (ev) => {
             let duration = ev.target.duration
-            let durationMinutes =  Math.trunc(duration/60)
-            if (durationMinutes < 10) durationMinutes = "0" + durationMinutes
-            let durationSecondes = Math.trunc(duration % 60)
-            if (durationSecondes < 10) durationSecondes = "0" + durationSecondes
-            let formatedDuration = (durationMinutes + ":" + durationSecondes)
+            let formatedDuration = APP.formatTime(duration)
             let HTMLduration = document.createElement("p")
             HTMLduration.classList.add("duration")
             HTMLduration.innerText = formatedDuration
             div.append(HTMLduration)
             audio.dataset.duration = formatedDuration
         })
+    },
+    formatTime: (time) => {
+        let durationMinutes =  Math.trunc(time/60)
+        if (durationMinutes < 10) durationMinutes = "0" + durationMinutes
+        let durationSecondes = Math.trunc(time % 60)
+        if (durationSecondes < 10) durationSecondes = "0" + durationSecondes
+        let formatedDuration = (durationMinutes + ":" + durationSecondes)
+        return formatedDuration
     },
     playerBackground: () => {
         let thumbnail = document.getElementById("thumbnail")
@@ -186,7 +190,8 @@ const APP = {
         let increment = 100/convertedTime
         setInterval(() => {
             console.log(APP.player.currentTime)
-            HTMLcurrentTime.innerText = APP.player.currentTime
+            let formatedDuration = APP.formatTime(APP.player.currentTime)
+            HTMLcurrentTime.innerText = formatedDuration
             const computedStyle = getComputedStyle(ProgressBar)
             const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0
             ProgressBar.style.setProperty("--width", width + increment )
