@@ -170,6 +170,7 @@ const APP = {
         } else {
             APP.playNextTrack()
         }
+        // APP.ProgressBar()
     },
     replay10: () => {
         if (APP.player.currentTime-10 < 0) {
@@ -190,16 +191,13 @@ const APP = {
         return minutes*60 + seconds;
     },
     ProgressBar: () => {
-        let convertedTime = APP.timeStringToFloat(APP.trackDuration.innerText)
-        let increment = 100/convertedTime
         setInterval(() => {
+            let convertedTime = APP.timeStringToFloat(APP.trackDuration.innerText)
             let formatedDuration = APP.formatTime(APP.player.currentTime)
             let HTMLcurrentTime = document.getElementById("current-time")
             HTMLcurrentTime.innerText = formatedDuration
             const ProgressBar = document.getElementById("progress-bar")
-            const computedStyle = getComputedStyle(ProgressBar)
-            const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0
-            ProgressBar.style.setProperty("--width", width + increment )
+            ProgressBar.style.setProperty("--width", APP.player.currentTime/convertedTime*100 )
         }, 1000)
     }
 };
