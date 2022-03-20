@@ -45,6 +45,10 @@ h1, h2, h3, p {
 #player-area {
     position: relative;
     width: 100%;
+    border: 0.01rem black solid;
+    overflow: hidden;
+    border-radius: 3rem;
+
 }
 
 button {
@@ -170,6 +174,9 @@ hr {
 
 .list-item img {
     width: 100%;
+    border: 0.01rem black solid;
+    overflow: hidden;
+    border-radius: 1rem;
 }
 
 .track-list {
@@ -181,6 +188,17 @@ hr {
 .active {
 border-bottom: solid rgb(241, 175, 20) 0.1rem;
 transform: scale(1.15);
+}
+
+.animate {
+    animation: scale 0.7s linear infinite;
+}
+
+@keyframes scale {
+    50% {
+        transform: rotate(10deg);
+        border-radius: 1rem;
+    }
 }
 
 @media only screen and (min-width: 52em) {

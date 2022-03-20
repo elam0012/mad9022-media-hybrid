@@ -9,9 +9,11 @@ const APP = {
     listItems: null,
     trackLength: null,
     trackDuration: null,
+    playerArea: null,
     init: () => { 
         APP.audioTracks = document.getElementsByClassName("audio-track")
-        APP.listItems =document.getElementsByClassName("list-item")
+        APP.listItems = document.getElementsByClassName("list-item")
+        APP.playerArea = document.getElementById("player-area")
         APP.buildSongList()
         APP.playerBackground()
         APP.addListeners()
@@ -124,6 +126,7 @@ const APP = {
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
         APP.listItems[APP.currentTrack].classList.add("active")
+        APP.playerArea.classList.add("animate")
         APP.ProgressBar()
         APP.addListeners()
     },
@@ -132,6 +135,7 @@ const APP = {
         APP.player.pause();
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
+        APP.playerArea.classList.remove("animate")
     },
     stopTrack: (ev) => {
         if (APP.player.paused || APP.player.paused === undefined) return
@@ -140,6 +144,7 @@ const APP = {
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
         if (!ev) APP.listItems[APP.currentTrack].classList.remove("active") //to keep the current track highlighted if Stop button clicked
+        APP.playerArea.classList.remove("animate")
     },
     changeTrack: (ev) => {
         APP.listItems[APP.currentTrack].classList.remove("active")
