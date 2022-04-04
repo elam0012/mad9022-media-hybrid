@@ -194,6 +194,10 @@ transform: scale(1.15);
     animation: scale 0.7s linear infinite;
 }
 
+.pause-animation {
+    animation-play-state: paused;
+}
+
 @keyframes scale {
     50% {
         transform: rotate(10deg);

@@ -126,6 +126,7 @@ const APP = {
         btnPlay.classList.add("display-none")
         btnPause.classList.remove("display-none")
         APP.listItems[APP.currentTrack].classList.add("active")
+        APP.playerArea.classList.remove("pause-animation")
         APP.playerArea.classList.add("animate")
         APP.ProgressBar()
         APP.addListeners()
@@ -135,7 +136,7 @@ const APP = {
         APP.player.pause();
         btnPause.classList.add("display-none")
         btnPlay.classList.remove("display-none")
-        APP.playerArea.classList.remove("animate")
+        APP.playerArea.classList.add("pause-animation")
     },
     stopTrack: (ev) => {
         if (APP.player.paused || APP.player.paused === undefined) return
