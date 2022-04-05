@@ -98,6 +98,10 @@ const APP = {
         btnForward10.addEventListener ("click", APP.forward10)
         let btnReplay10 = document.getElementById('btnReplay');
         btnReplay10.addEventListener ("click", APP.replay10)
+        let btnVolumeOn = document.getElementById('btnVolumeOn');
+        btnVolumeOn.addEventListener ("click", APP.mute)
+        let btnVolumeOff = document.getElementById('btnVolumeOff');
+        btnVolumeOff.addEventListener ("click", APP.mute)
         if (APP.player) { 
             APP.player.addEventListener('ended', () => {
                 APP.listItems[APP.currentTrack].classList.remove("active")
@@ -176,13 +180,22 @@ const APP = {
         } else {
             APP.playNextTrack()
         }
-        // APP.ProgressBar()
     },
     replay10: () => {
         if (APP.player.currentTime-10 < 0) {
             APP.playPreviousTrack()
         } else {
             APP.player.currentTime = APP.player.currentTime - 10
+        }
+    },
+    mute: () => {
+        APP.player.muted = !APP.player.muted
+        if(APP.player.muted) {
+            btnVolumeOn.classList.add("display-none")
+            btnVolumeOff.classList.remove("display-none")
+        } else {
+            btnVolumeOn.classList.remove("display-none")
+            btnVolumeOff.classList.add("display-none")
         }
     },
     updateTotalDuration: () => {

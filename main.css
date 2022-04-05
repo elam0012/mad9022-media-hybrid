@@ -132,6 +132,7 @@ button {
 #controls {
     margin-top: 1rem;
     text-align: center;
+    white-space: nowrap;
 }
 
 #controls img {
